@@ -1,4 +1,4 @@
-# hi-chicken
+# hi-chick
 
 ## Project setup
 ```
