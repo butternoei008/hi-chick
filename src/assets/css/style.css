@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+   box-sizing: border-box;
+}
+
 html,
 body {
    margin: 0;
    padding: 0;
    height: 100%;
+   font-family: 'Press Start 2P', cursive;
 }
 
 .pos-absolute {
@@ -34,12 +41,37 @@ body {
 }
 
 .key {
-   width: 6rem;
-   height: 6rem;
+   width: 8rem;
+   height: 8rem;
    margin: 0.5rem 0.5rem;
    border-radius: 50%;
    border: 20px;
    border-style: solid;
    border-color: #5e5e5e;
    background-color: #707070;
+}
+
+.text-center {
+   text-align: center;
+}
+
+.card {
+   background-color: #fff;
+   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, .3);
+   border-radius: .5rem;
+}
+
+.card-body {
+   padding: 1rem;
+}
+
+.form-control {
+   display: block;
+   width: 100%;
+   border-radius: .5rem;
+   padding: .5rem .4rem;
+   font-size: 1.5rem;
+   outline: 0;
+   border-radius: .25rem;
+   border: 2px solid #ced4da;
 }
