@@ -9,11 +9,15 @@ body {
    margin: 0;
    padding: 0;
    height: 100%;
-   font-family: 'Press Start 2P', cursive;
+   font-family: cursive;
 }
 
 .pos-absolute {
    position: absolute;
+}
+
+.pos-relative {
+   position: relative;
 }
 
 .w-100 {
@@ -74,4 +78,5 @@ body {
    outline: 0;
    border-radius: .25rem;
    border: 2px solid #ced4da;
+   color: #646464;
 }

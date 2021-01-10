@@ -1,8 +1,8 @@
 <template>
    <div id="app" class="h-100">
-      <CreateUser v-if="screen === 1" />
-      <Menu v-else-if="screen === 2" />
-      <GamePlay v-else-if="screen === 3" />
+      <Menu v-if="currentScreen === 1" />
+      <GamePlay v-else-if="currentScreen === 2" />
+      <CreateUser v-else-if="currentScreen === 3" />
    </div>
 </template>
 
@@ -11,6 +11,8 @@ import "./assets/css/style.css"
 import Menu from "./pages/Menu"
 import GamePlay from "./pages/GamePlay"
 import CreateUser from "./pages/CreateUser"
+import { mapGetters } from "vuex"
+import { CHANGE_SCREEN } from "@/store/actions.type"
 
 export default {
    name: "App",
@@ -24,12 +26,14 @@ export default {
          screen: 1,
       }
    },
+   computed: {
+      ...mapGetters(["currentScreen"])
+   },
    mounted() {
       document.addEventListener("keydown", (event) => {
          switch (event.code) {
-            // case "KeyA":
-            case "asidjflka;sixcvviozuxcpovu8w4eiumcvmvbkjbibmaeoifgj-s8fug":
-               this.screen = 2
+            case "KeyA":
+               this.$store.dispatch(CHANGE_SCREEN, 2)
                break
          }
       })

@@ -22,9 +22,3 @@ export default {
    },
 }
 </script>
-
-<style scroped>
-body {
-   font-family: cursive;
-}
-</style>

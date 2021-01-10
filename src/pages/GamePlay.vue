@@ -1,112 +1,150 @@
 <template>
-  <div>
-    <div class="text-center">
-      <h1>{{ time.minute | pad }}:{{ time.second % 60 | pad }}</h1>
-      <img alt="Vue logo" width="400" :src="eggCrack">
-      <!-- <img alt="Vue logo" width="400" :src="'../assets/images/' + eggCrack"> -->
-    </div>
-    <div class="d-flex justify-content-center w-100">
-      <div class="box pos-absolute">
-        <CircleKey
-          v-for="(value, index) in chickCode"
-          :key="index"
-          :color="color[value.key]"
-          :active="value.active"
-        />
+   <div>
+      <div class="pos-relative">
+         <h1 class="text-center">
+            {{ time.minute | pad }}:{{ time.second % 60 | pad }}
+         </h1>
+         <div style="position: absolute; right: 2.5rem; top 0;">
+            <ol>
+               <li v-for="(rank, index) in fetchRank.ranks" :key="index">
+                  {{ `${rank.name} ${rank.time}` }}
+               </li>
+            </ol>
+         </div>
       </div>
-    </div>
-  </div>
+      <div class="text-center">
+         <img alt="Vue logo" width="400" :src="eggCrack" />
+      </div>
+      <div class="d-flex justify-content-center w-100">
+         <div class="box pos-absolute">
+            <CircleKey
+               v-for="(value, index) in chickCode"
+               :key="index"
+               :color="color[value.key]"
+               :active="value.active"
+            />
+         </div>
+      </div>
+   </div>
 </template>
 
 <script>
-import CircleKey from "@/components/Keys/CircleKey";
+import CircleKey from "@/components/Keys/CircleKey"
+import { mapGetters } from "vuex"
+import { CREATE_USER, FETCH_RANK, CHANGE_SCREEN } from "@/store/actions.type"
 
 export default {
-  name: "GamePlay",
-  components: {
-    CircleKey,
-  },
-  data() {
-    return {
-      keyCode: ["KeyA", "KeyS", "KeyD", "KeyF"],
-      chickCode: [],
-      color: {
-        KeyA: "red",
-        KeyS: "green",
-        KeyD: "blue",
-        KeyF: "yellow",
+   name: "GamePlay",
+   components: {
+      CircleKey,
+   },
+   data() {
+      return {
+         keyCode: ["KeyA", "KeyS", "KeyD", "KeyF"],
+         chickCode: [],
+         color: {
+            KeyA: "red",
+            KeyS: "green",
+            KeyD: "blue",
+            KeyF: "yellow",
+         },
+         time: {
+            minute: 0,
+            second: 1,
+         },
+         interval: null,
+         index: 0,
+         numberOfKey: 3,
+         step: 28,
+         eggCrack: require("@/assets/images/0.svg"),
+      }
+   },
+   computed: {
+      ...mapGetters(["fetchUser", "fetchRank"]),
+   },
+   mounted() {
+      this.createChickCode()
+      document.addEventListener("keydown", this.onKeyDown)
+
+      this.interval = setInterval(() => {
+         this.time.second++
+         this.time.minute = parseInt(this.time.second / 60)
+      }, 1000)
+   },
+   filters: {
+      pad(number) {
+         return number < 10 ? "0" + number : number
       },
-      time: {
-        minute: 0,
-        second: 1,
+   },
+   methods: {
+      onKeyDown(event) {
+         if (event.code === this.chickCode[this.index].key) {
+            this.chickCode[this.index].active = true
+            this.index++
+         } else {
+            this.index = 0
+            this.chickCode.map((code) => (code.active = false))
+         }
+
+         if (this.index === this.chickCode.length) {
+            this.index = 0
+            this.step++
+            this.handleCheckpoint()
+            this.eggCrack = require(`@/assets/images/${this.step}.svg`)
+
+            setTimeout(() => {
+               this.createChickCode()
+            }, 200)
+         }
       },
-      index: 0,
-      numberOfKey: 3,
-      step: 0,
-      eggCrack: require('@/assets/images/0.svg'),
-    };
-  },
-  mounted() {
-    this.createChickCode();
-    document.addEventListener("keydown", this.onKeyDown);
+      createChickCode() {
+         this.chickCode = [...Array(Math.floor(this.numberOfKey))].map(() => ({
+            key: this.keyCode[Math.floor(Math.random() * this.keyCode.length)],
+            active: false,
+         }))
+      },
+      handleCheckpoint() {
+         switch (this.step + 1) {
+            case 5:
+               this.numberOfKey = 4
+               break
+            case 10:
+               this.numberOfKey = 5
+               break
+            case 17:
+               this.numberOfKey = 6
+               break
+            case 25:
+               this.numberOfKey = 7
+               break
+         }
 
-    setInterval(() => {
-      this.time.second++;
-      this.time.minute = parseInt(this.time.second / 60);
-    }, 1000);
-  },
-  filters: {
-    pad(number) {
-      return number < 10 ? "0" + number : number;
-    },
-  },
-  methods: {
-    onKeyDown(event) {
-      if (event.code === this.chickCode[this.index].key) {
-        this.chickCode[this.index].active = true;
-        this.index++;
-      } else {
-        this.index = 0;
-        this.chickCode.map((code) => (code.active = false));
-      }
+         if (this.step >= 29) {
+            clearInterval(this.interval)
+            const ranks = this.fetchRank.ranks
+            const inRank = [ranks[0].time, ranks[ranks.length - 1].time].some(
+               (r) => r > this.time.second
+            )
 
-      if (this.index === this.chickCode.length) {
-        this.index = 0;
-        this.step++;
-        this.handleCheckpoint();
-        this.eggCrack = require(`@/assets/images/${this.step}.svg`);
+            document.removeEventListener("keydown", this.onKeyDown, false)
 
-        setTimeout(() => {
-          this.createChickCode();
-        }, 200);
-      }
-    },
-    createChickCode() {
-      this.chickCode = [...Array(Math.floor(this.numberOfKey))].map(() => ({
-        key: this.keyCode[Math.floor(Math.random() * this.keyCode.length)],
-        active: false,
-      }));
-    },
-    handleCheckpoint() {
-      switch (this.step + 1) {
-        case 5:
-          this.numberOfKey = 4;
-          break;
-        case 10:
-          this.numberOfKey = 5;
-          break;
-        case 17:
-          this.numberOfKey = 6;
-          break;
-        case 25:
-          this.numberOfKey = 7;
-          break;
-      }
+            if (inRank) {
+               this.$store.dispatch(CREATE_USER, {
+                  name: "foo_" + new Date().getTime(),
+                  time: this.time.second,
+               })
+               this.$store.dispatch(FETCH_RANK)
 
-      if (this.step >= 29) {
-        console.log("End game");
-      }
-    },
-  },
-};
+               setTimeout(() => {
+                  this.$store.dispatch(CHANGE_SCREEN, 3)
+               }, 2000)
+            } else {
+               setTimeout(() => {
+                  this.$store.dispatch(CHANGE_SCREEN, 1)
+               }, 2000)
+            }
+         }
+      },
+   },
+}
 </script>

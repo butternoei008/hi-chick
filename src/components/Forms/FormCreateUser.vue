@@ -2,20 +2,35 @@
    <div>
       <Camera @snap="takePicture" />
       <canvas ref="canvas"></canvas>
-      <form action="">
-         <label for="nickname"><h2>Your name</h2></label>
-         <input type="text" name="nickname" class="form-control" required />
+      <form @submit.prevent="handleSubmit">
+         <label for="name"><h2>Your name</h2></label>
+         <input
+            v-model="formData.name"
+            type="text"
+            name="name"
+            class="form-control"
+            required
+         />
+         <button type="submit">Save</button>
       </form>
    </div>
 </template>
 
 <script>
 import Camera from "../Media/Camera"
+import { CREATE_USER } from "@/store/actions.type"
 
 export default {
    name: "FormCreateUser",
    components: {
       Camera,
+   },
+   data() {
+      return {
+         formData: {
+            name: "",
+         },
+      }
    },
    methods: {
       takePicture() {
@@ -29,8 +44,18 @@ export default {
 
          ctx.imageSmoothingEnabled = true
          ctx.imageSmoothingQuality = "high"
-         ctx.drawImage(document.querySelector("video"), 0, 0, picture.width, picture.height)
-      }
-   }
+         ctx.drawImage(
+            document.querySelector("video"),
+            0,
+            0,
+            picture.width,
+            picture.height
+         )
+         console.log(picture.toDataURL());
+      },
+      handleSubmit() {
+         this.$store.dispatch(CREATE_USER, this.formData)
+      },
+   },
 }
 </script>
