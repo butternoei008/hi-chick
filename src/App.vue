@@ -21,11 +21,6 @@ export default {
       GamePlay,
       CreateUser,
    },
-   data() {
-      return {
-         screen: 1,
-      }
-   },
    computed: {
       ...mapGetters(["currentScreen"])
    },

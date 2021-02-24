@@ -1,4 +1,3 @@
-// import { FETCH_CURRENT_USER } from './actions.type'
 import axios from "axios"
 import { CREATE_USER, CREATE_USER_ERROR } from "./actions.type"
 
@@ -9,7 +8,7 @@ const state = {
 const actions = {
    async [CREATE_USER](context, user) {
       try {
-         await axios.post("http://localhost:8085/user", user, {
+         await axios.post(`${process.env.VUE_APP_URL}/user`, user, {
             "Content-Type": "application/json",
          })
 

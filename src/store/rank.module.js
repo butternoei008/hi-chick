@@ -7,7 +7,7 @@ const state = {
 
 const actions = {
    async [FETCH_RANK](context) {
-      const res = await axios.get("http://localhost:8085/user/rank")
+      const res = await axios.get(`${process.env.VUE_APP_URL}/user/rank`)
       context.commit(FETCH_RANK, res.data)
    },
 }

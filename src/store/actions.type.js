@@ -7,3 +7,6 @@ export const FETCH_RANK = "fetchRank"
 
 export const CURRENT_SCREEN = "currentScreen"
 export const CHANGE_SCREEN = "changeScreen"
+
+export const SET_SCORE_TIME = "setScoreTime"
+export const GET_SCORE_TIME = "getScoreTime"

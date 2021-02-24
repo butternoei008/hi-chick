@@ -31,7 +31,7 @@
 <script>
 import CircleKey from "@/components/Keys/CircleKey"
 import { mapGetters } from "vuex"
-import { CREATE_USER, FETCH_RANK, CHANGE_SCREEN } from "@/store/actions.type"
+import { FETCH_RANK, CHANGE_SCREEN, SET_SCORE_TIME } from "@/store/actions.type"
 
 export default {
    name: "GamePlay",
@@ -55,7 +55,7 @@ export default {
          interval: null,
          index: 0,
          numberOfKey: 3,
-         step: 28,
+         step: 27,
          eggCrack: require("@/assets/images/0.svg"),
       }
    },
@@ -122,26 +122,24 @@ export default {
          if (this.step >= 29) {
             clearInterval(this.interval)
             const ranks = this.fetchRank.ranks
-            const inRank = [ranks[0].time, ranks[ranks.length - 1].time].some(
+
+            const inRank = ranks.length > 1 && ranks.length > 9 ? [ranks[0].time, ranks[ranks.length - 1].time].some(
                (r) => r > this.time.second
-            )
+            ) : true
 
             document.removeEventListener("keydown", this.onKeyDown, false)
 
             if (inRank) {
-               this.$store.dispatch(CREATE_USER, {
-                  name: "foo_" + new Date().getTime(),
-                  time: this.time.second,
-               })
+               this.$store.dispatch(SET_SCORE_TIME, this.time.second)
                this.$store.dispatch(FETCH_RANK)
 
                setTimeout(() => {
                   this.$store.dispatch(CHANGE_SCREEN, 3)
-               }, 2000)
+               }, 1500)
             } else {
                setTimeout(() => {
                   this.$store.dispatch(CHANGE_SCREEN, 1)
-               }, 2000)
+               }, 1500)
             }
          }
       },

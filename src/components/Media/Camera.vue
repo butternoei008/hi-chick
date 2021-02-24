@@ -1,14 +1,14 @@
 <template>
    <div>
       <video class="camera" ref="camera" autoplay></video>
-      <button type="button" @click="$emit('snap')">SNAP</button>
+      <!-- <button v-if="typeof snap !== 'undefined'" type="button" @click="$emit('snap')">SNAP</button> -->
    </div>
 </template>
 
 <script>
 export default {
    name: "Camera",
-   beforeMount() {
+   mounted() {
       this.init()
    },
    methods: {
