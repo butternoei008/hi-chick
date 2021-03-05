@@ -5,12 +5,29 @@ const state = {
    user: [],
 }
 
+const request = async (method, url, data = {}) => {
+   try {
+      const res = await axios({
+         method,
+         url: process.env.VUE_APP_URL + url,
+         data,
+      })
+      return res.data
+   } catch (error) {
+      console.log(error)
+   }
+}
+
 const actions = {
    async [CREATE_USER](context, user) {
       try {
-         await axios.post(`${process.env.VUE_APP_URL}/user`, user, {
-            "Content-Type": "application/json",
-         })
+         const res = await request("POST", "/user", user)
+
+         if (res.result === "success") {
+            console.log(res)
+         } else {
+            console.log("!success!!!!!!!!!!")
+         }
 
          context.commit(CREATE_USER, user)
       } catch (error) {

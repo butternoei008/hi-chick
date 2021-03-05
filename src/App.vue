@@ -12,7 +12,6 @@ import Menu from "./pages/Menu"
 import GamePlay from "./pages/GamePlay"
 import CreateUser from "./pages/CreateUser"
 import { mapGetters } from "vuex"
-import { CHANGE_SCREEN } from "@/store/actions.type"
 
 export default {
    name: "App",
@@ -22,16 +21,7 @@ export default {
       CreateUser,
    },
    computed: {
-      ...mapGetters(["currentScreen"])
-   },
-   mounted() {
-      document.addEventListener("keydown", (event) => {
-         switch (event.code) {
-            case "KeyA":
-               this.$store.dispatch(CHANGE_SCREEN, 2)
-               break
-         }
-      })
+      ...mapGetters(["currentScreen"]),
    },
 }
 </script>

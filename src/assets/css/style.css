@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Itim&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Itim&display=swap");
 
 * {
    box-sizing: border-box;
@@ -9,7 +9,10 @@ body {
    margin: 0;
    padding: 0;
    height: 100%;
-   font-family: cursive, 'Itim';
+   font-family: cursive, "Itim";
+   background-image: url('~@/assets/background.png');
+   background-size: cover;
+   background-position: bottom;
 }
 
 .pos-absolute {
@@ -40,6 +43,10 @@ body {
    justify-content: center;
 }
 
+.align-items-center {
+   align-items: center;
+}
+
 .box {
    padding: 0.2rem 1rem;
    border: 8px solid #c4dbff;
@@ -65,8 +72,8 @@ body {
 
 .card {
    background-color: #fff;
-   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, .3);
-   border-radius: .5rem;
+   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+   border-radius: 0.5rem;
 }
 
 .card-body {
@@ -76,11 +83,105 @@ body {
 .form-control {
    display: block;
    width: 100%;
-   border-radius: .5rem;
-   padding: .5rem .4rem;
+   border-radius: 0.5rem;
+   padding: 0.5rem 0.4rem;
    font-size: 1.5rem;
    outline: 0;
-   border-radius: .25rem;
+   border-radius: 0.25rem;
    border: 2px solid #ced4da;
    color: #646464;
+}
+
+.img-rank {
+   width: 135px;
+   height: 135px;
+   object-fit: cover;
+}
+
+.img-wrap-rank {
+   padding: 0.5rem;
+   width: 150px;
+   height: 150px;
+}
+
+.border-rounded {
+   border-radius: 50%;
+}
+
+.border-gradient {
+   border: 10px solid;
+   border-image-slice: 1;
+   border-width: 5px;
+}
+
+.wrap-gradient-purple {
+   background-image: linear-gradient(to left, #743ad5, #d53a9d);
+}
+
+.wrap-gradient-green {
+   background-image: linear-gradient(to left, #00C853, #B2FF59);
+}
+
+/* Helper */
+
+.py-1 {
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+}
+
+.py-2 {
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+}
+
+.py-3 {
+   padding-top: 1.5rem;
+   padding-bottom: 1.5rem;
+}
+
+.py-4 {
+   padding-top: 2rem;
+   padding-bottom: 2rem;
+}
+
+.py-5 {
+   padding-top: 2.5rem;
+   padding-bottom: 2.5rem;
+}
+
+.m-0 {
+   margin: 0;
+}
+
+.m-1 {
+   margin: 0.5rem;
+}
+
+.m-2 {
+   margin: 1rem;
+}
+
+.m-3 {
+   margin: 1.5rem;
+}
+
+.m-4 {
+   margin: 2rem;
+}
+
+.m-5 {
+   margin: 2.5rem;
+}
+
+.mb-1 {
+   margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+   margin-bottom: 1rem;
+}
+
+.mx-auto {
+   margin-left: auto;
+   margin-right: auto;
 }

@@ -13,7 +13,7 @@
          </div>
       </div>
       <div class="text-center">
-         <img alt="Vue logo" width="400" :src="eggCrack" />
+         <img alt="Vue logo" width="800" :src="eggCrack" />
       </div>
       <div class="d-flex justify-content-center w-100">
          <div class="box pos-absolute">
@@ -55,7 +55,7 @@ export default {
          interval: null,
          index: 0,
          numberOfKey: 3,
-         step: 27,
+         step: 0,
          eggCrack: require("@/assets/images/0.svg"),
       }
    },

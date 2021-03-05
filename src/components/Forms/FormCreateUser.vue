@@ -72,9 +72,9 @@ export default {
          recognition.lang = "th-TH"
          recognition.start()
 
-         recognition.onstart = function() {
-            console.log("speech started");
-         }
+         // recognition.onstart = function() {
+         //    console.log("speech started");
+         // }
 
          recognition.addEventListener("result", (event) => {
             const result = event.results[0][0].transcript
@@ -86,18 +86,19 @@ export default {
          recognition.onend = () => {
             if (this.formData.name === "") {
                recognition.start()
+               console.log("if start");
             } else {
                this.handleSubmit()
             }
          }
       },
-      handleSubmit() {
+      async handleSubmit() {
          const data = new FormData()
 
          data.append("name", this.formData.name)
          data.append("picture", this.formData.picture)
          data.append("time", this.scoreTime)
-         
+
          this.$store.dispatch(CREATE_USER, data)
       },
    },
